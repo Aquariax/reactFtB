@@ -9,10 +9,15 @@ export class Search extends Component {
     }
     onSubmit=(submit)=>{
         submit.preventDefault();
-        this.props.searchUsers(this.state.text);
-        this.setState({text:''})
+        if(this.state.text ==''){
+            this.props.setAlert('Please type something', 'light')
+        }else{
+            this.props.searchUsers(this.state.text);
+            this.setState({text:''})
+        }
     }
     render() {
+        const {showClear, clearUsers} =this.props
         return (
             <div>
                 <form onSubmit={this.onSubmit} className="form">
@@ -21,6 +26,9 @@ export class Search extends Component {
                     onChange={this.onChange}/>
                     <input type="submit" value="Search" className="btn btn-dark btn-block"/>
                 </form>
+                {showClear &&
+                <button className="btn-light btn-block" onClick={clearUsers}>clear</button>}
+                
             </div>
         )
     }
