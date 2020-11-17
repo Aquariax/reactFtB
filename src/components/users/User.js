@@ -1,15 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import Repos from '../repos/Repos'
+import React, {  Fragment, useEffect } from 'react';
 import {Link} from 'react-router-dom';
+import Repos from '../repos/Repos'
 import Spinner from '../layout/Spinner';
 
+const User = ({user, loading, getUser, getUserRepos, repos, match}) => {
+    useEffect(() =>{
+        getUser(match.params.login);
+        getUserRepos(match.params.login);
+    })
 
-export class User extends Component {
-    componentDidMount(){
-        this.props.getUser(this.props.match.params.login);
-        this.props.getUserRepos(this.props.match.params.login);
-    }
-    render() {
         const{
             name,
             company,
@@ -24,8 +23,7 @@ export class User extends Component {
             public_repos,
             public_gists,
             hireable
-        } = this.props.user;
-        const {loading, repos} =this.props;
+        } = user;
         if(loading) return <Spinner/>
         return (
             <Fragment>
@@ -74,6 +72,5 @@ export class User extends Component {
             </Fragment>
             
         )}
-}
 
 export default User
